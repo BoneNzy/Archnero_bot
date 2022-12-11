@@ -1,10 +1,11 @@
-import {config} from 'dotenv';
-import {REST} from '@discordjs/rest';
+import { config } from 'dotenv';
+import { REST } from '@discordjs/rest';
 import {
     Client,
     GatewayIntentBits,
     Routes
 } from 'discord.js';
+// import { options } from 'nodemon/lib/config';
 
 config();
 const TOKEN = process.env.daemon_token;
@@ -15,7 +16,7 @@ const client = new Client({ intents: [
     GatewayIntentBits.Guilds,
     GatewayIntentBits.GuildMessages,
     GatewayIntentBits.MessageContent
-] });
+]});
 
 client.on('ready', () => console.log(`Logged in as ${client.user.username}!`));
 
@@ -29,8 +30,26 @@ client.on('interactionCreate', (interaction) => {
 
 async function mainCommands() {
     const commands = [{
-        name:'hello',
-        description: 'greetings'
+        name:'greet',
+        description: 'greetings',
+        options: [
+            {
+                name: 'hello',
+                description: 'foreign language greetings',
+                type: 3,
+                required: true,
+                choices: [
+                    {
+                        name: 'nihongo',
+                        value: 'Konichiwa'
+                    },
+                    {
+                        name: 'hindi',
+                        value: 'Namaste'
+                    },
+                ],
+            },
+        ],
     }];
 
     try {
@@ -39,7 +58,6 @@ async function mainCommands() {
             body: commands,
         });
 
-        client.login(TOKEN);
     } catch (err) {
         console.log(err);
     }
@@ -47,18 +65,4 @@ async function mainCommands() {
 
 mainCommands()
 
-// Message Details
-// client.on('messageCreate', (message) => {
-//     let messageDetails = [{
-//         content: message.content,
-//         date: message.createdAt.toDateString(),
-//         user: message.author.tag
-//     }];
-//     let obj = messageDetails.map(({content, date, user}) =>{
-//         return ({
-//             content,
-//             date,
-//             user});
-//     })
-//     console.log(obj);
-// })
+client.login(TOKEN);
