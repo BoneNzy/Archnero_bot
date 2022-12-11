@@ -5,7 +5,6 @@ import {
     GatewayIntentBits,
     Routes
 } from 'discord.js';
-// import { options } from 'nodemon/lib/config';
 
 config();
 const TOKEN = process.env.daemon_token;
@@ -24,7 +23,9 @@ const rest = new REST ({ version:'10' }).setToken(TOKEN);
 
 client.on('interactionCreate', (interaction) => {
     if(interaction.isChatInputCommand()){
-        interaction.reply({ content: 'what is it!' })
+        console.log(interaction.options.get('hello').value);
+        // interaction.reply({ content: 'what is it!' })
+        interaction.reply({ content: interaction.options.get('hello').value })
     }
 })
 
@@ -40,12 +41,24 @@ async function mainCommands() {
                 required: true,
                 choices: [
                     {
+                        name: 'bodo',
+                        value: 'Gwjwntwng'
+                    },
+                    {
                         name: 'nihongo',
                         value: 'Konichiwa'
                     },
                     {
                         name: 'hindi',
                         value: 'Namaste'
+                    },
+                    {
+                        name: 'spanish',
+                        value: 'Hola'
+                    },
+                    {
+                        name: 'chinese',
+                        value: 'Nǐ hǎo'
                     },
                 ],
             },
