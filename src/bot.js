@@ -24,8 +24,9 @@ const rest = new REST ({ version:'10' }).setToken(TOKEN);
 client.on('interactionCreate', (interaction) => {
     if(interaction.isChatInputCommand()){
         console.log(interaction.options.get('hello').value);
+        console.log(interaction.options.get('bye').value);
         // interaction.reply({ content: 'what is it!' })
-        interaction.reply({ content: interaction.options.get('hello').value })
+        interaction.reply({ content: `${interaction.options.get('hello').value} && ${interaction.options.get('bye').value}` })
     }
 })
 
@@ -62,6 +63,26 @@ async function mainCommands() {
                     },
                 ],
             },
+            {
+                name: 'bye',
+                description: 'foreign language goodbyes',
+                type:3,
+                required: true,
+                choices: [
+                    {
+                        name: 'bodo',
+                        value: 'Bedai lanwswi'
+                    },
+                    {
+                        name: 'nihongo',
+                        value: 'Sayonara'
+                    },
+                    {
+                        name: 'hindi',
+                        value: 'Duwa o me yaad rakhna'
+                    },
+                ],
+            }
         ],
     }];
 
