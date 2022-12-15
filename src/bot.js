@@ -22,11 +22,15 @@ client.on('ready', () => console.log(`Logged in as ${client.user.username}!`));
 const rest = new REST ({ version:'10' }).setToken(TOKEN);
 
 client.on('interactionCreate', (interaction) => {
+
     if(interaction.isChatInputCommand()){
+        const greetings = interaction.options.get('hello').value;
+        const goodbyes = interaction.options.get('bye').value;
+
         console.log(interaction.options.get('hello').value);
         console.log(interaction.options.get('bye').value);
-        // interaction.reply({ content: 'what is it!' })
-        interaction.reply({ content: `${interaction.options.get('hello').value} && ${interaction.options.get('bye').value}` })
+
+        interaction.reply({ content: `${greetings} and ${goodbyes}` })
     }
 })
 
