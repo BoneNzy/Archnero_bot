@@ -5,6 +5,7 @@ import {
     GatewayIntentBits,
     Routes
 } from 'discord.js';
+import { SlashCommandBuilder } from '@discordjs/builders';
 
 config();
 const TOKEN = process.env.daemon_token;
@@ -35,16 +36,16 @@ client.on('interactionCreate', (interaction) => {
 })
 
 async function mainCommands() {
-    const commands = [{
-        name:'greet',
-        description: 'greetings',
-        options: [
-            {
-                name: 'hello',
-                description: 'foreign language greetings',
-                type: 3,
-                required: true,
-                choices: [
+
+    const greetingCommand = new SlashCommandBuilder()
+        .setName('greet')
+        .setDescription('Greetings')
+        .addStringOption((option) =>
+            option
+                .setName('hello')
+                .setDescription('foreign language greetings')
+                .setRequired(true)
+                .addChoices(
                     {
                         name: 'bodo',
                         value: 'Gwjwntwng'
@@ -65,14 +66,14 @@ async function mainCommands() {
                         name: 'chinese',
                         value: 'Nǐ hǎo'
                     },
-                ],
-            },
-            {
-                name: 'bye',
-                description: 'foreign language goodbyes',
-                type:3,
-                required: true,
-                choices: [
+                ),
+        )
+        .addStringOption((option) =>
+            option
+                .setName('bye')
+                .setDescription('foreign language goodbyes')
+                .setRequired(true)
+                .addChoices(
                     {
                         name: 'bodo',
                         value: 'Bedai lanwswi'
@@ -85,10 +86,10 @@ async function mainCommands() {
                         name: 'hindi',
                         value: 'Duwa o me yaad rakhna'
                     },
-                ],
-            }
-        ],
-    }];
+                ),
+        )
+
+    const commands = [greetingCommand.toJSON()];
 
     try {
         console.log();
@@ -96,11 +97,11 @@ async function mainCommands() {
             body: commands,
         });
 
+        client.login(TOKEN);
+
     } catch (err) {
         console.log(err);
     }
 }
 
 mainCommands()
-
-client.login(TOKEN);
