@@ -5,7 +5,7 @@ import {
     GatewayIntentBits,
     Routes
 } from 'discord.js';
-import { SlashCommandBuilder } from '@discordjs/builders';
+import greetingCommand from './commands/hello.js';
 
 config();
 const TOKEN = process.env.daemon_token;
@@ -37,59 +37,7 @@ client.on('interactionCreate', (interaction) => {
 
 async function mainCommands() {
 
-    const greetingCommand = new SlashCommandBuilder()
-        .setName('greet')
-        .setDescription('Greetings')
-        .addStringOption((option) =>
-            option
-                .setName('hello')
-                .setDescription('foreign language greetings')
-                .setRequired(true)
-                .addChoices(
-                    {
-                        name: 'bodo',
-                        value: 'Gwjwntwng'
-                    },
-                    {
-                        name: 'nihongo',
-                        value: 'Konichiwa'
-                    },
-                    {
-                        name: 'hindi',
-                        value: 'Namaste'
-                    },
-                    {
-                        name: 'spanish',
-                        value: 'Hola'
-                    },
-                    {
-                        name: 'chinese',
-                        value: 'Nǐ hǎo'
-                    },
-                ),
-        )
-        .addStringOption((option) =>
-            option
-                .setName('bye')
-                .setDescription('foreign language goodbyes')
-                .setRequired(true)
-                .addChoices(
-                    {
-                        name: 'bodo',
-                        value: 'Bedai lanwswi'
-                    },
-                    {
-                        name: 'nihongo',
-                        value: 'Sayonara'
-                    },
-                    {
-                        name: 'hindi',
-                        value: 'Duwa o me yaad rakhna'
-                    },
-                ),
-        )
-
-    const commands = [greetingCommand.toJSON()];
+    const commands = [greetingCommand];
 
     try {
         console.log();
