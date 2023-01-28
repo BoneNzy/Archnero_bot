@@ -1,7 +1,7 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
 
 const greetingCommand = new SlashCommandBuilder()
-    .setName('greet')
+    .setName('greet-in')
     .setDescription('Greetings')
     .addStringOption((option) =>
         option

@@ -5,7 +5,7 @@ import {
     GatewayIntentBits,
     Routes
 } from 'discord.js';
-import greetingCommand from './commands/hello.js';
+import greetingCommand from './commands/greeting.js';
 
 config();
 const TOKEN = process.env.daemon_token;
