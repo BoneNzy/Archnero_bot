@@ -5,11 +5,7 @@ import {
     GatewayIntentBits,
     Routes
 } from 'discord.js';
-
-config();
-const TOKEN = process.env.daemon_token;
-const APP_CLIENT_ID = process.env.APP_CLIENT_ID;
-const SERVER_GUILD_ID = process.env.SERVER_GUILD_ID;
+import greetingCommand from './commands/greeting.js';
 
 const client = new Client({ intents: [
     GatewayIntentBits.Guilds,
@@ -17,65 +13,44 @@ const client = new Client({ intents: [
     GatewayIntentBits.MessageContent
 ]});
 
+config();
+
+const TOKEN = process.env.daemon_token;
+const APP_CLIENT_ID = process.env.APP_CLIENT_ID;
+// const guild = client.guilds.cache.first();
+// const SERVER_GUILD_ID = guild.id;
+const SERVER_GUILD_ID = process.env.SERVER_GUILD_ID;
+
 client.on('ready', () => console.log(`Logged in as ${client.user.username}!`));
 
 const rest = new REST ({ version:'10' }).setToken(TOKEN);
 
 client.on('interactionCreate', (interaction) => {
+
     if(interaction.isChatInputCommand()){
+        const greetings = interaction.options.get('hello').value;
+        const goodbyes = interaction.options.get('bye').value;
+
         console.log(interaction.options.get('hello').value);
-        // interaction.reply({ content: 'what is it!' })
-        interaction.reply({ content: interaction.options.get('hello').value })
+        console.log(interaction.options.get('bye').value);
+
+        interaction.reply({ content: `${greetings} and ${goodbyes}` })
     }
 })
 
 async function mainCommands() {
-    const commands = [{
-        name:'greet',
-        description: 'greetings',
-        options: [
-            {
-                name: 'hello',
-                description: 'foreign language greetings',
-                type: 3,
-                required: true,
-                choices: [
-                    {
-                        name: 'bodo',
-                        value: 'Gwjwntwng'
-                    },
-                    {
-                        name: 'nihongo',
-                        value: 'Konichiwa'
-                    },
-                    {
-                        name: 'hindi',
-                        value: 'Namaste'
-                    },
-                    {
-                        name: 'spanish',
-                        value: 'Hola'
-                    },
-                    {
-                        name: 'chinese',
-                        value: 'Nǐ hǎo'
-                    },
-                ],
-            },
-        ],
-    }];
+
+    const commands = [greetingCommand];
 
     try {
         console.log();
-        await rest.put(Routes.applicationGuildCommands(APP_CLIENT_ID, SERVER_GUILD_ID), {
-            body: commands,
-        });
+        await rest.put(Routes.applicationGuildCommands(APP_CLIENT_ID), { body: commands });
+
 
     } catch (err) {
         console.log(err);
     }
 }
 
-mainCommands()
-
 client.login(TOKEN);
+mainCommands()

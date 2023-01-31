@@ -4,12 +4,13 @@
   "description": "Discord Bot v1",
   "main": "src/bot.js",
   "scripts": {
-    "test": "node .src/bot.js"
+    "test": "nodemon .src/bot.js"
   },
   "type": "module",
   "author": "Bone Da Archon",
   "license": "ISC",
   "dependencies": {
+    "@discordjs/builders": "^1.4.0",
     "@discordjs/rest": "^1.4.0",
     "chalk": "^5.1.2",
     "discord-api-types": "^0.37.21",
