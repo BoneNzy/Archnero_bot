@@ -10,7 +10,7 @@ const greetingCommand = new SlashCommandBuilder()
             .setRequired(true)
             .addChoices(
                 {
-                    name: 'bodo',
+                    name: 'bodooooo',
                     value: 'Gwjwntwng'
                 },
                 {

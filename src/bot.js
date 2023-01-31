@@ -7,16 +7,19 @@ import {
 } from 'discord.js';
 import greetingCommand from './commands/greeting.js';
 
-config();
-const TOKEN = process.env.daemon_token;
-const APP_CLIENT_ID = process.env.APP_CLIENT_ID;
-const SERVER_GUILD_ID = process.env.SERVER_GUILD_ID;
-
 const client = new Client({ intents: [
     GatewayIntentBits.Guilds,
     GatewayIntentBits.GuildMessages,
     GatewayIntentBits.MessageContent
 ]});
+
+config();
+
+const TOKEN = process.env.daemon_token;
+const APP_CLIENT_ID = process.env.APP_CLIENT_ID;
+// const guild = client.guilds.cache.first();
+// const SERVER_GUILD_ID = guild.id;
+const SERVER_GUILD_ID = process.env.SERVER_GUILD_ID;
 
 client.on('ready', () => console.log(`Logged in as ${client.user.username}!`));
 
@@ -41,15 +44,13 @@ async function mainCommands() {
 
     try {
         console.log();
-        await rest.put(Routes.applicationGuildCommands(APP_CLIENT_ID, SERVER_GUILD_ID), {
-            body: commands,
-        });
+        await rest.put(Routes.applicationGuildCommands(APP_CLIENT_ID), { body: commands });
 
-        client.login(TOKEN);
 
     } catch (err) {
         console.log(err);
     }
 }
 
+client.login(TOKEN);
 mainCommands()
