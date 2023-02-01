@@ -7,3 +7,6 @@ config.json
 
 # Features files for testing different features
 features.js
+
+# A file used for taking milestone
+milestone.txt
