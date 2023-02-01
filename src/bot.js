@@ -1,56 +1,15 @@
-import { config } from 'dotenv';
-import { REST } from '@discordjs/rest';
-import {
-    Client,
-    GatewayIntentBits,
-    Routes
-} from 'discord.js';
-import greetingCommand from './commands/greeting.js';
+const { GatewayIntentBits } = require("discord.js");
+const Discord = require("discord.js");
+require('dotenv').config();
 
-const client = new Client({ intents: [
-    GatewayIntentBits.Guilds,
-    GatewayIntentBits.GuildMessages,
-    GatewayIntentBits.MessageContent
-]});
+const client = new Discord.Client({
+    intents: [GatewayIntentBits.Guilds]
+});
+const TOKEN = process.env.archnero_token;
 
-config();
-
-const TOKEN = process.env.daemon_token;
-const APP_CLIENT_ID = process.env.APP_CLIENT_ID;
-// const guild = client.guilds.cache.first();
-// const SERVER_GUILD_ID = guild.id;
-const SERVER_GUILD_ID = process.env.SERVER_GUILD_ID;
-
-client.on('ready', () => console.log(`Logged in as ${client.user.username}!`));
-
-const rest = new REST ({ version:'10' }).setToken(TOKEN);
-
-client.on('interactionCreate', (interaction) => {
-
-    if(interaction.isChatInputCommand()){
-        const greetings = interaction.options.get('hello').value;
-        const goodbyes = interaction.options.get('bye').value;
-
-        console.log(interaction.options.get('hello').value);
-        console.log(interaction.options.get('bye').value);
-
-        interaction.reply({ content: `${greetings} and ${goodbyes}` })
-    }
-})
-
-async function mainCommands() {
-
-    const commands = [greetingCommand];
-
-    try {
-        console.log();
-        await rest.put(Routes.applicationGuildCommands(APP_CLIENT_ID), { body: commands });
-
-
-    } catch (err) {
-        console.log(err);
-    }
-}
-
+// Log in to discord with the bot token from the .env file
 client.login(TOKEN);
-mainCommands()
+
+client.on('ready', () => {
+    console.log(`logged in as ${client.user.tag}`);
+});

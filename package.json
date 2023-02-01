@@ -6,7 +6,6 @@
   "scripts": {
     "test": "nodemon .src/bot.js"
   },
-  "type": "module",
   "author": "Bone Da Archon",
   "license": "ISC",
   "dependencies": {
