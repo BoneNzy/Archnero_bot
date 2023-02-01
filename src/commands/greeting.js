@@ -1,4 +1,4 @@
-import { SlashCommandBuilder } from '@discordjs/builders';
+const SlashCommandBuilder = require("@discordjs/builders")
 
 const greetingCommand = new SlashCommandBuilder()
     .setName('greet-in')
