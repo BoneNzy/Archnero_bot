@@ -60,7 +60,7 @@ async function mainCommands() {
 
     try {
         console.log();
-        await rest.put(Routes.applicationGuildCommands(APP_CLIENT_ID), { body: commands });
+        await rest.put(Routes.applicationGuildCommands(APP_CLIENT_ID, SERVER_GUILD_ID), { body: commands });
 
 
     } catch (err) {
